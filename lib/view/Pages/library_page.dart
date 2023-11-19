@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rive/rive.dart';
 
 import '../../constants.dart';
 import '../../controller/firebase_controller.dart';
@@ -46,15 +47,46 @@ class _LibraryPageState extends State<LibraryPage> {
         ),
         actions: [
           IconButton(
-            onPressed: _syncLibrary,
-            icon: const Icon(Icons.cloud_sync_rounded),
+            onPressed: () {
+              _syncLibrary();
+              refresh.input!.change(true);
+              Future.delayed(const Duration(seconds: 1), () {
+                refresh.input!.change(false);
+              });
+            },
+            icon: SizedBox(
+              width: 36,
+              height: 36,
+              child: RiveAnimation.asset(
+                refresh.src,
+                artboard: refresh.artboard,
+                onInit: (artboard) {
+                  StateMachineController controller =
+                      Utils.getRiveController(artboard, stateMachineName: refresh.stateMachineName);
+                  refresh.input = controller.findSMI("active");
+                },
+              ),
+            ),
           ),
           IconButton(
             onPressed: () {
               FileManager.delateAllLocalAndCloudFiles();
               pagingController.refresh();
             },
-            icon: Stack(
+            icon: SizedBox(
+              width: 36,
+              height: 36,
+              child: RiveAnimation.asset(
+                cycleBin.src,
+                artboard: cycleBin.artboard,
+                onInit: (artboard) {
+                  StateMachineController controller = Utils.getRiveController(artboard,
+                      stateMachineName: cycleBin.stateMachineName);
+                  cycleBin.input = controller.findSMI("active");
+                },
+              ),
+            ),
+            /* Stack(
               alignment: Alignment.topCenter,
               children: [
                 const Align(
@@ -75,7 +107,7 @@ class _LibraryPageState extends State<LibraryPage> {
                       ),
                     )),
               ],
-            ),
+            ),*/
           ),
         ],
       ),

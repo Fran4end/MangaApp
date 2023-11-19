@@ -18,10 +18,15 @@ final List<RiveAsset> bottomNavigators = [
   RiveAsset("assets/RiveAssets/icons.riv",
       artboard: "SEARCH", stateMachineName: "SEARCH_Interactivity", title: "Search"),
   RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "LIKE/STAR", stateMachineName: "STAR_Interactivity", title: "Library"),
+      artboard: "LIBRARY", stateMachineName: "LIBRARY_Interactivity", title: "Library"),
   RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "USER", stateMachineName: "USER_Interactivity", title: "Account"),
+      artboard: "SETTINGS", stateMachineName: "SETTINGS_Interactivity", title: "Account"),
 ];
+final cycleBin = RiveAsset("assets/RiveAssets/icons.riv",
+    artboard: "DELETE", stateMachineName: "DELETE_Interactivity", title: "delete all");
+
+final refresh = RiveAsset("assets/RiveAssets/icons.riv",
+    artboard: "REFRESH/RELOAD", stateMachineName: "REFRESH/RELOAD_Interactivity", title: "update");
 
 final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
