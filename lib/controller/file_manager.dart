@@ -85,7 +85,7 @@ class FileManager {
     }
   }
 
-  static Future<List<File>> getAllLocalFile() async {
+  static get getAllLocalFile async {
     Directory dir = await getApplicationDocumentsDirectory();
     try {
       return Directory("${dir.path}/${user?.uid}").listSync().map((e) => (e as File)).toList();
@@ -118,7 +118,7 @@ class FileManager {
   }
 
   static void delateAllLocalAndCloudFiles() async {
-    List<File> files = await getAllLocalFile();
+    List<File> files = await getAllLocalFile;
     for (var file in files) {
       bool fileExist = await file.exists();
       if (user == null) {
@@ -172,7 +172,7 @@ class FileManager {
         print("user not logged or file not valid");
       }
     } else {
-      List<File> files = await FileManager.getAllLocalFile();
+      List<File> files = await FileManager.getAllLocalFile;
 
       try {
         final file =

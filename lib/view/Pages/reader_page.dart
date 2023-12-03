@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:html/parser.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yomu_no_ikiru/constants.dart';
 
 import '../../Api/Adapter/mangakatana_adapter.dart';
 import '../../Api/adapter.dart';
@@ -56,6 +57,7 @@ class _ReaderState extends State<Reader> {
   late final Chapter chapter;
 
   double sliderValue = 2;
+  bool isSliding = false;
   Future<List<String>>? imageFutures;
   PageController? pageController;
   bool showAppBar = false;
@@ -161,45 +163,54 @@ class _ReaderState extends State<Reader> {
                         icon: icon,
                       ),
               ),
-              bottomNavigationBar: AnimatedBar(
-                begin: const Offset(0, 1),
-                builder: () => !showAppBar
-                    ? const SizedBox.shrink()
-                    : SafeArea(
-                        child: ReaderBottomNavigationBar(
-                          reverse: reverse,
-                          chapters: builder.chapters,
-                          builder: builder,
-                          chapterIndex: widget.chapterIndex,
-                          axis: axis,
-                          icon: icon,
-                          onScope: onScope,
-                          onPageChange: widget.onPageChange,
-                          images: imageUrls,
-                          pageIndex: pageIndex,
-                          slider: Slider.adaptive(
-                            inactiveColor: Theme.of(context).colorScheme.secondary,
-                            value: sliderValue,
-                            divisions: imageUrls.length + 2,
-                            label: "${sliderValue.toInt() - 1} / ${imageUrls.length}",
-                            min: 2,
-                            max: (imageUrls.length.toDouble() + 1),
-                            onChanged: (value) {
-                              if (!(value == 1 || value == imageUrls.length + 2)) {
-                                sliderValue = value;
-                              }
-                              pageIndex = value.toInt() - 1;
-                              pageController?.animateToPage(
-                                pageIndex,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                              setState(() {});
-                            },
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: AnimatedBar(
+                  begin: const Offset(0, 1),
+                  builder: () => !showAppBar
+                      ? const SizedBox.shrink()
+                      : SafeArea(
+                          child: ReaderBottomNavigationBar(
+                            reverse: reverse,
+                            chapters: builder.chapters,
+                            builder: builder,
+                            chapterIndex: widget.chapterIndex,
+                            axis: axis,
+                            icon: icon,
+                            onScope: onScope,
+                            onPageChange: widget.onPageChange,
+                            images: imageUrls,
+                            pageIndex: pageIndex,
+                            slider: Slider.adaptive(
+                              inactiveColor: Theme.of(context).colorScheme.secondary,
+                              value: sliderValue,
+                              divisions: imageUrls.length + 2,
+                              label: "${sliderValue.toInt() - 1} / ${imageUrls.length}",
+                              min: 2,
+                              max: (imageUrls.length.toDouble() + 1),
+                              onChangeStart: (value) => setState(() {
+                                isSliding = true;
+                              }),
+                              onChangeEnd: (value) => setState(() {
+                                isSliding = false;
+                              }),
+                              onChanged: (value) {
+                                if (!(value == 1 || value == imageUrls.length + 2)) {
+                                  sliderValue = value;
+                                }
+                                pageIndex = value.toInt() - 1;
+                                pageController?.animateToPage(
+                                  pageIndex,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                                setState(() {});
+                              },
+                            ),
+                            api: api,
                           ),
-                          api: api,
                         ),
-                      ),
+                ),
               ),
               body: ReaderPageWidget(
                 axis: axis,
@@ -211,6 +222,10 @@ class _ReaderState extends State<Reader> {
                 nativeAd1: nativeAd1!,
                 nativeAd2: nativeAd2!,
                 onPageChanged: (index) {
+                  double value = index.toDouble() + 1;
+                  if (!(value == 1 || value == imageUrls.length + 2) && !isSliding) {
+                    sliderValue == value;
+                  }
                   pageIndex = index;
                   setState(() {});
                 },

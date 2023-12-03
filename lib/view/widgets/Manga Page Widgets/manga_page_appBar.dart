@@ -58,9 +58,12 @@ class CustomSliverAppBar extends StatelessWidget {
                       manga.author.toString(),
                       style: TextStyle(fontSize: artistAuthorSize, fontWeight: FontWeight.w200),
                     ),
-                    const CircleAvatar(
-                      radius: 3,
-                      backgroundColor: Color(0xff0f0f0f),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+                      child: CircleAvatar(
+                        radius: 3,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                     Text(
                       manga.artist.toString(),

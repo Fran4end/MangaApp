@@ -60,7 +60,9 @@ dependencies:
   connectivity_plus:
   intl:
   webview_flutter:
-  google_mobile_ads: ^3.1.0
+  google_mobile_ads:
+  flutter_dotenv:
+  firebase_messaging:
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +95,7 @@ flutter:
     - assets/
     - assets/RiveAssets/
     - assets/sourceIcons/
+    - .env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

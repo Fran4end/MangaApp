@@ -135,7 +135,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future _fetchData(int page) async {
-    print(page);
     try {
       final newItems = await api.getResults(search, page);
       final isLastPage = newItems.length < api.pageSize;

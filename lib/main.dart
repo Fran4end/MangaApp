@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:yomu_no_ikiru/Api/firebase_messaging.dart';
 import 'constants.dart';
 import 'model/firebase_options.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
@@ -23,6 +25,8 @@ main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseApi().initNotifications();
+  // await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.dark,
@@ -54,6 +58,9 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       home: const NavigationBarWidget(),
+      routes: {
+        LibraryPage.route: (context) => const LibraryPage(),
+      },
     );
   }
 }

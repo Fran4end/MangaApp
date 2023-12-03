@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,6 +16,7 @@ import '../widgets/manga_widget.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
+  static const route = "/library-page";
 
   @override
   State<StatefulWidget> createState() => _LibraryPageState();
@@ -39,6 +41,10 @@ class _LibraryPageState extends State<LibraryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final message = ModalRoute.of(context)!.settings.arguments! as RemoteMessage;
+    print("Title: ${message.notification?.title}");
+    print("body: ${message.notification?.body}");
+    print("payload: ${message.data}");
     return Scaffold(
       appBar: AppBar(
         title: const Text(

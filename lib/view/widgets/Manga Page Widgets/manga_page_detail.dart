@@ -53,7 +53,7 @@ class MangaPlot extends StatelessWidget {
                 overflow: TextOverflow.fade,
               ),
               const Positioned(
-                bottom: -10,
+                bottom: -8,
                 child: Icon(
                   Icons.keyboard_arrow_down,
                   size: 25,

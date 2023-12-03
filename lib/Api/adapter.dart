@@ -11,4 +11,6 @@ abstract class MangaApiAdapter {
   Map<String, dynamic> toJson() {
     return {"type": type};
   }
+
+  bool hasNewChapter(MangaBuilder manga);
 }
