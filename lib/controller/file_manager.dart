@@ -172,7 +172,7 @@ class FileManager {
         print("user not logged or file not valid");
       }
     } else {
-      List<File> files = await FileManager.getAllLocalFile;
+      List<File> files = await FileManager.getAllLocalFile();
 
       try {
         final file =

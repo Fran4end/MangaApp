@@ -222,10 +222,6 @@ class _ReaderState extends State<Reader> {
                 nativeAd1: nativeAd1!,
                 nativeAd2: nativeAd2!,
                 onPageChanged: (index) {
-                  double value = index.toDouble() + 1;
-                  if (!(value == 1 || value == imageUrls.length + 2) && !isSliding) {
-                    sliderValue == value;
-                  }
                   pageIndex = index;
                   setState(() {});
                 },
